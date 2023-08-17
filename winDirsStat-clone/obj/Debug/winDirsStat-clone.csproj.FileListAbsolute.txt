@@ -1,0 +1,10 @@
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\bin\Debug\winDirsStat-clone.exe.config
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\bin\Debug\winDirsStat-clone.exe
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\bin\Debug\winDirsStat-clone.pdb
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat-clone.csproj.AssemblyReference.cache
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat_clone.Properties.Resources.resources
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat-clone.csproj.GenerateResource.cache
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat-clone.csproj.CoreCompileInputs.cache
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat-clone.exe
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat-clone.pdb
+C:\Users\aaron\source\repos\winDirsStat-clone\winDirsStat-clone\obj\Debug\winDirsStat_clone.BaseForm.resources
