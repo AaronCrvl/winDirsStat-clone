@@ -29,72 +29,45 @@ namespace winDirsStat_clone
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeView = new System.Windows.Forms.TreeView();
-            this.ckBox = new System.Windows.Forms.CheckedListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnScan = new System.Windows.Forms.Button();
+            this.ucFolderManagement = new winDirsStat_clone.Forms.UserControls.ucFolderManagement();
             this.SuspendLayout();
             // 
-            // treeView
+            // btnScan
             // 
-            this.treeView.Location = new System.Drawing.Point(12, 40);
-            this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(821, 319);
-            this.treeView.TabIndex = 0;
+            this.btnScan.Font = new System.Drawing.Font("LEMON MILK Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnScan.Location = new System.Drawing.Point(35, 27);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(128, 23);
+            this.btnScan.TabIndex = 0;
+            this.btnScan.Text = "Scan Directory";
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
             // 
-            // ckBox
+            // ucFolderManagement
             // 
-            this.ckBox.FormattingEnabled = true;
-            this.ckBox.Items.AddRange(new object[] {
-            "checBx"});
-            this.ckBox.Location = new System.Drawing.Point(839, 40);
-            this.ckBox.Name = "ckBox";
-            this.ckBox.Size = new System.Drawing.Size(226, 139);
-            this.ckBox.TabIndex = 1;
-            this.ckBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.ckBox_ItemCheck);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(835, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 24);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Formats";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 24);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Files and Folders";
+            this.ucFolderManagement.Location = new System.Drawing.Point(12, 56);
+            this.ucFolderManagement.Name = "ucFolderManagement";
+            this.ucFolderManagement.Size = new System.Drawing.Size(1085, 376);
+            this.ucFolderManagement.TabIndex = 0;
             // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 551);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.ckBox);
-            this.Controls.Add(this.treeView);
+            this.ClientSize = new System.Drawing.Size(1106, 444);
+            this.Controls.Add(this.btnScan);
+            this.Controls.Add(this.ucFolderManagement);
             this.Name = "BaseForm";
             this.Text = "winDirStat ";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView;
-        private System.Windows.Forms.CheckedListBox ckBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private Forms.UserControls.ucFolderManagement ucFolderManagement;
+        private System.Windows.Forms.Button btnScan;
     }
 }
 

@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace winDirsStat_clone.Data
 {
     public class Directory
     {
+        #region Constructors
         public Directory()
         {
-            this.path = "";            
+            this.path = "";
         }
         public Directory(string _path)
         {
             this.path = _path;
         }
+        #endregion
 
+        #region Properties
         public string path;
-        public long mbSize;
         public string[] files;
         public string[] subDirectories;
         public List<string> fileExtensions;
+        #endregion       
     }
 }
