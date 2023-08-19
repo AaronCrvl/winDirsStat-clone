@@ -1,5 +1,5 @@
 # winDirsStat-clone📂
-[WindDirStat](https://windirstat.net/) clone e made with C.
+[WindDirStat](https://windirstat.net/) clone e made with C#.
 
 ## Running Features
 - Read all directory files and subdirectories
