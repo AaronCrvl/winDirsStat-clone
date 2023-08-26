@@ -46,15 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\DirectoryController.cs" />
-    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\cDirectory.cs" />
+    <Compile Include="Controllers\cFile.cs" />
+    <Compile Include="Controllers\cLog.cs" />
     <Compile Include="Data\Directory.cs" />
     <Compile Include="Data\Objects\ExtensionData.cs" />
+    <Compile Include="Enums\MenuOptions.cs" />
     <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserControls\GraphicControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControls\GraphicControl.Designer.cs">
+      <DependentUpon>GraphicControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\UserControls\ucFolderManagement.cs">
       <SubType>UserControl</SubType>
@@ -66,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserControls\GraphicControl.resx">
+      <DependentUpon>GraphicControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserControls\ucFolderManagement.resx">
       <DependentUpon>ucFolderManagement.cs</DependentUpon>
@@ -92,6 +103,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Log\LogFile.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

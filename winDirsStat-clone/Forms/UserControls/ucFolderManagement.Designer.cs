@@ -83,8 +83,9 @@ namespace winDirsStat_clone.Forms.UserControls
             this.treeView.Font = new System.Drawing.Font("Roboto", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView.Location = new System.Drawing.Point(17, 46);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(821, 314);
+            this.treeView.Size = new System.Drawing.Size(821, 499);
             this.treeView.TabIndex = 4;
+            this.treeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseDoubleClick);
             // 
             // listBox
             // 
@@ -99,7 +100,7 @@ namespace winDirsStat_clone.Forms.UserControls
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 387);
+            this.splitter1.Size = new System.Drawing.Size(3, 565);
             this.splitter1.TabIndex = 9;
             this.splitter1.TabStop = false;
             // 
@@ -152,7 +153,7 @@ namespace winDirsStat_clone.Forms.UserControls
             this.Controls.Add(this.label1);
             this.Controls.Add(this.treeView);
             this.Name = "ucFolderManagement";
-            this.Size = new System.Drawing.Size(1080, 387);
+            this.Size = new System.Drawing.Size(1080, 565);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();

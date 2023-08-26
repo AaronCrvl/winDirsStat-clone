@@ -29,45 +29,83 @@ namespace winDirsStat_clone
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnScan = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scanDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ucFolderManagement = new winDirsStat_clone.Forms.UserControls.ucFolderManagement();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnScan
+            // menuStrip1
             // 
-            this.btnScan.Font = new System.Drawing.Font("LEMON MILK Light", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnScan.Location = new System.Drawing.Point(35, 27);
-            this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(128, 23);
-            this.btnScan.TabIndex = 0;
-            this.btnScan.Text = "Scan Directory";
-            this.btnScan.UseVisualStyleBackColor = true;
-            this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.menuStrip1.Font = new System.Drawing.Font("LEMON MILK Light", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1086, 25);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.scanDirectoryToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(77, 21);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.optionsToolStripMenuItem_DropDownItemClicked);
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // scanDirectoryToolStripMenuItem
+            // 
+            this.scanDirectoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearSearchToolStripMenuItem});
+            this.scanDirectoryToolStripMenuItem.Name = "scanDirectoryToolStripMenuItem";
+            this.scanDirectoryToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.scanDirectoryToolStripMenuItem.Text = "Scan Directory";
+            // 
+            // clearSearchToolStripMenuItem
+            // 
+            this.clearSearchToolStripMenuItem.Name = "clearSearchToolStripMenuItem";
+            this.clearSearchToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.clearSearchToolStripMenuItem.Text = "Clear Search";
             // 
             // ucFolderManagement
             // 
-            this.ucFolderManagement.Location = new System.Drawing.Point(12, 56);
+            this.ucFolderManagement.Location = new System.Drawing.Point(9, 28);
             this.ucFolderManagement.Name = "ucFolderManagement";
-            this.ucFolderManagement.Size = new System.Drawing.Size(1085, 376);
+            this.ucFolderManagement.Size = new System.Drawing.Size(1085, 551);
             this.ucFolderManagement.TabIndex = 0;
             // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1106, 444);
-            this.Controls.Add(this.btnScan);
+            this.ClientSize = new System.Drawing.Size(1086, 591);
             this.Controls.Add(this.ucFolderManagement);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "BaseForm";
             this.Text = "winDirStat ";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Forms.UserControls.ucFolderManagement ucFolderManagement;
-        private System.Windows.Forms.Button btnScan;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scanDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearSearchToolStripMenuItem;
     }
 }
 

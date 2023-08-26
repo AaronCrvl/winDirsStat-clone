@@ -3,7 +3,7 @@ using System.IO;
 
 namespace winDirsStat_clone.Controllers
 {
-    public class FileController
+    public class cFile
     {
         #region Methods
         public static long GetFileSizeInMB(string path)
@@ -40,10 +40,9 @@ namespace winDirsStat_clone.Controllers
             }
         }
 
-        public static bool FileExists(string path)
-        {
-            return new FileInfo(path).Exists;
-        }
+        public static bool FileExists(string path) => new FileInfo(path).Exists;
+
+        public static string GetFilePath(string path) => new FileInfo(path).DirectoryName;              
         #endregion        
     }
 }

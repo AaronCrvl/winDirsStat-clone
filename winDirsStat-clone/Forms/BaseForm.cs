@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using winDirsStat_clone.Enums;
 using winDirsStat_clone.Forms.UserControls;
 
 namespace winDirsStat_clone
@@ -14,7 +15,7 @@ namespace winDirsStat_clone
         #endregion
 
         #region Events
-        private void btnScan_Click(object sender, EventArgs e)
+        void SearchDirectory()
         {            
             using (var fbd = new FolderBrowserDialog())
             {
@@ -24,6 +25,27 @@ namespace winDirsStat_clone
                     ucFolderManagement.FillTreeList(fbd.SelectedPath);                                    
             }
         }
-        #endregion        
+        #endregion
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            e.ToString();
+        }
+
+        private void optionsToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var option = e.ClickedItem.Text;
+            switch (option)
+            {
+                case "Scan Directory":
+                    SearchDirectory();
+                    break;
+                case "Clear Search":
+                    ucFolderManagement.ClearDependencies();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

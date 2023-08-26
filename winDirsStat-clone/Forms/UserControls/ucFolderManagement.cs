@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,17 +21,16 @@ namespace winDirsStat_clone.Forms.UserControls
         }
         #endregion
 
-        #region Properties
-        TreeView tree;
+        #region Properties        
+        TreeView treeCopy = new TreeView();
         List<ExtensionData> extensions = new List<ExtensionData>();
         #endregion        
 
         #region Events
         void ckBoxList_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if(!treeView.Nodes.Equals(tree.Nodes))
-                treeView = tree;
-
+        {           
+            treeView.Nodes.Clear();
+                           
             var checkedExtensions = new List<string>();
             checkedExtensions.Add((string)ckBoxList.SelectedItem);
 
@@ -45,29 +45,52 @@ namespace winDirsStat_clone.Forms.UserControls
                 FilterTreeView(checkedExtensions);
             }
         }
+
+        void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            try
+            {
+                // double click only open directory for now to prevent from exceptions                
+                if (cDirectory.DirectoryExists(e.Node.Text)) // double click on a directory
+                    Process.Start(e.Node.Text);
+                else // double click on file
+                {
+                    System.Reflection.PropertyInfo pi = e.Node.Tag.GetType().GetProperty("fullPath");
+                    String fullPath = pi == null ? string.Empty : (String)(pi.GetValue(e.Node.Tag, null));
+                    Process.Start(cFile.GetFilePath(fullPath + "\\"));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
 
         #region Methods
-        void ClearDependencies()
+        public void ClearDependencies()
         {
             ckBoxList.Items.Clear();
             treeView.Nodes.Clear();
+            treeCopy.Nodes.Clear();
         }
 
         public async void FillTreeList(string path)
-        {
-            lblLoad.Visible = true;
+        {           
+            lblLoad.Visible = true;            
             ClearDependencies();
+            treeView.CreateGraphics();
 
-            var data = DirectoryController.ReadDirectory(path);
+            var data = cDirectory.ReadDirectory(path);
             var node = new TreeNode(data.path);
-            node.BackColor = Color.LightBlue;            
+            node.BackColor = Color.LightCyan;            
             treeView.Nodes.Add(node);
 
             await ReadSubdirectories(data, node);
             await CalculateFileDataQuantities(treeView.Nodes);
-            treeView.ExpandAll();         
-            lblLoad.Visible = false;
+            await CopyTreeViewNodes();
+            treeView.ExpandAll();                        
+            lblLoad.Visible = false;            
         }
 
         async Task ReadSubdirectories(Data.Directory data, TreeNode fatherNode)
@@ -93,12 +116,12 @@ namespace winDirsStat_clone.Forms.UserControls
                 // Async LINQ foreach for reading subdirectories 
                 data.subDirectories.ToList<string>().ForEach(async (subDirectoriesName) =>
                 {
-                    var dirData = DirectoryController.ReadDirectory(subDirectoriesName);
+                    var dirData = cDirectory.ReadDirectory(subDirectoriesName);
                     var subNode = new TreeNode(subDirectoriesName);
 
                     if (dirData.files != null)
                         dirData.files.ToList<string>().ForEach((subData) =>
-                        {                            
+                        {
                             if (!subNode.Nodes.ContainsKey(fatherNode.Nodes.IndexOf(new TreeNode(subData.Replace(dirData.path, ".."))).ToString()))
                                 subNode.Nodes.Add(CreateFileTreeNode(subData.Replace(dirData.path, ".."), subData));
                         });
@@ -114,21 +137,25 @@ namespace winDirsStat_clone.Forms.UserControls
                     {
                         fullPath = subDirectoriesName,
                         name = subDirectoriesName.Replace(dirData.path, ".."),
-                        fileCount = DirectoryController.GetDirectoryFileCount(subDirectoriesName),
+                        fileCount = cDirectory.GetDirectoryFileCount(subDirectoriesName),
                     });
                     fatherNode.Nodes.Add(subNode);
 
                     // Asynchronous subTasks, reading each subdirectory
                     if (dirData.subDirectories.Length > 0)
                         await ReadSubdirectories(dirData, subNode);
-                });
-
-                tree = treeView;
+                });                
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        async Task CopyTreeViewNodes()
+        {            
+            foreach (TreeNode node in treeView.Nodes)
+                treeCopy.Nodes.Add((TreeNode)node.Clone());
         }
 
         async Task CalculateFileDataQuantities(TreeNodeCollection nodeCollection)
@@ -148,10 +175,10 @@ namespace winDirsStat_clone.Forms.UserControls
                         pi = node.Tag.GetType().GetProperty("extension");
                         String extension = pi == null ? string.Empty : (String)(pi.GetValue(node.Tag, null));
 
-                        pi = node.Tag.GetType().GetProperty("exists");
-                        Boolean exists = pi == null ? false : (Boolean)(pi.GetValue(node.Tag, null));
+                        pi = node.Tag.GetType().GetProperty("FileExists");
+                        Boolean FileExists = pi == null ? false : (Boolean)(pi.GetValue(node.Tag, null));
 
-                        if (exists)
+                        if (FileExists)
                             if (ContainsInExtensionList(extension))
                             {
                                 foreach (var _ext in extensions)
@@ -178,7 +205,7 @@ namespace winDirsStat_clone.Forms.UserControls
             }
             catch (Exception ex)
             {
-                // ignore not supported file exception and log it on the console error log file
+                // ignore file if it is not supported , register it on a error log file
                 if (ex.GetType() == new System.NotSupportedException().GetType())
                     Console.WriteLine($"Some file is not supported. \t\n InnerException: {ex.InnerException} \t\n StackTrace: {ex.StackTrace}");
                 else
@@ -201,12 +228,12 @@ namespace winDirsStat_clone.Forms.UserControls
         {
             var fileTreeNode = new TreeNode(name);
             fileTreeNode.BackColor = Color.LightGray;
-            fileTreeNode.Tag = new // Treenode.Tag stores a object with object attributes  
+            fileTreeNode.Tag = new // Treenode.Tag stores a object with node attributes  
             {
-                fullPath = path,
-                fileSize = FileController.GetFileSizeInMB(path),
-                extension = FileController.GetFileExtension(path),
-                exists = FileController.FileExists(path),
+                fullPath = cFile.GetFilePath(path),
+                fileSize = cFile.GetFileSizeInMB(path),
+                extension = cFile.GetFileExtension(path),
+                FileExists = cFile.FileExists(path),
             };            
             return fileTreeNode;
         }
@@ -219,7 +246,16 @@ namespace winDirsStat_clone.Forms.UserControls
 
         void FilterTreeView(List<string> indexes, TreeNodeCollection subNode = null)
         {
-            var collection = subNode == null ? treeView.Nodes : subNode;
+            treeView.Nodes.Clear();
+            if (ckBoxList.SelectedItems.Count == 0)
+            {
+                foreach (TreeNode node in treeCopy.Nodes)
+                    treeView.Nodes.Add(node);
+
+                return;
+            }
+
+            var collection = subNode == null ? treeCopy.Nodes : subNode;
             foreach (TreeNode node in collection)
             {
                 if (node == null)
@@ -227,23 +263,21 @@ namespace winDirsStat_clone.Forms.UserControls
 
                 // Is directory ?
                 if (node.Nodes.Count > 0)
-                    FilterTreeView(indexes, node.Nodes);                
+                {
+                    treeView.Nodes.Add((TreeNode)node.Clone());
+                    FilterTreeView(indexes, node.Nodes);
+                }                 
                 else
-                {                    
-                    if (node.Tag == null)
-                        continue;
-
-                    System.Reflection.PropertyInfo pi = node.Tag.GetType().GetProperty("exists");
-                    Boolean exists = pi == null ? false : (Boolean)(pi.GetValue(node.Tag, null));
-                    if (exists)
+                {                                  
+                    System.Reflection.PropertyInfo pi = node.Tag.GetType().GetProperty("FileExists");
+                    Boolean FileExists = pi == null ? false : (Boolean)(pi.GetValue(node.Tag, null));
+                    if (FileExists)
                     {
                         pi = node.Tag.GetType().GetProperty("extension");
-                        String extension = pi == null ? "" : (String)pi.GetValue(node.Tag, null);
+                        String extension = pi == null ? "" : (String)pi.GetValue(node.Tag, null);                        
 
-                        // BUGGGGGG - not filtering files in TreeNode
-                        // Remove file nodes who dont have the especified extension
-                        if (!indexes.ToList<string>().Contains(extension) && treeView.Nodes.IndexOf(node) != -1)
-                            treeView.Nodes.RemoveAt(treeView.Nodes.IndexOf(node));
+                        if (indexes.ToList<String>().Contains(extension) && treeView.Nodes.IndexOf(node) == -1)
+                            treeView.Nodes.Add((TreeNode)node.Clone());
                     }
                 }
             }
@@ -257,6 +291,6 @@ namespace winDirsStat_clone.Forms.UserControls
 
             return false;
         }
-        #endregion   
+        #endregion           
     }
 }
